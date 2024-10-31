@@ -1,1 +1,37 @@
-ls
+# Flutter/Dart related
+**/build/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Flutter.xcframework
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Runner.xcworkspace/
+**/macos/Pods/
+.pub/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+analysis_options.yaml
+*.iml
+*.jks
+*.keystore
+*.lock
+*.log
+
+# VS Code files
+.vscode/
+.idea/
+
+# macOS specific
+.DS_Store
+
+# Android specific
+*.apk
+*.ap_
+
+# Other
+*.swp
+*.swo
+*.tmp
+*.temp
