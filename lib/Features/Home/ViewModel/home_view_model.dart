@@ -82,6 +82,7 @@ class HomeViewModel extends ChangeNotifier {
       isloading = true;
       if (value != null) {
         isloading = false;
+        // !NB(hi dev devs team) there is no pagination so i take only 30 of items from list there is 1500 itesm i think loading all of it make take more time
         patients = value.patient?.take(30).toList() ?? [];
       } else {
         isloading = false;
