@@ -33,6 +33,7 @@ class _PdfScreenState extends State<PdfScreen> {
       onPopInvoked: (didPop) {
         homeViewModel.getPatients(context);
         homeViewModel.clearAllcontroller();
+        homeViewModel.createdList.clear();
       },
       child: Scaffold(
         body: SingleChildScrollView(
@@ -119,8 +120,8 @@ class _PdfScreenState extends State<PdfScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          customColumn(
-                              "Treatment", widget.selectedTreatment, size),
+                          customColumn("Treatment",
+                              homeViewModel.selectedtreatemnts ?? "", size),
                           customColumn("Price",
                               widget.patientdetails.advanceAmount, size),
                           customColumn(
@@ -171,10 +172,11 @@ class _PdfScreenState extends State<PdfScreen> {
                           ontap: () {
                             Navigator.pop(context);
                             homeViewModel.clearAllcontroller();
+                            homeViewModel.createdList.clear();
                             homeViewModel.getPatients(context);
                           }),
                       SizedBox(
-                        height: size * .1,
+                        height: size * .2,
                       ),
                     ],
                   ),

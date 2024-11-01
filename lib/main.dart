@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter App',
+        title: 'AYURVEDHA',
         theme: ThemeData(
           useMaterial3: true,
         ),

@@ -3,7 +3,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_test_app/Commons/app_strings.dart';
 import 'package:flutter_test_app/Commons/base_urls.dart';
 import 'package:flutter_test_app/Commons/common_flushbar.dart';
-import 'package:flutter_test_app/Extentions/enum_routes.dart';
 import 'package:flutter_test_app/Features/Authentication/Model/login_response_model.dart';
 
 class AuthRepository {
@@ -25,8 +24,6 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         EasyLoading.dismiss();
-        successFlushbar(context, AppStrings.loginSuccess);
-        goHome(context);
         return LoginResponseModel.fromJson(response.data);
       } else {
         EasyLoading.dismiss();

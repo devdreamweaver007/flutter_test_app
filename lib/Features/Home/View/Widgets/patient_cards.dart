@@ -33,7 +33,7 @@ class _PatientCardsState extends State<PatientCards> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 16,left: 16,right: 16),
+                  padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -48,9 +48,9 @@ class _PatientCardsState extends State<PatientCards> {
                           ),
                           Icon(Icons.person),
                           Text(
-                            patient.name == ""?
-                            "Annonymus":
-                            patient.name ?? "User",
+                            patient.name == ""
+                                ? "Annonymus"
+                                : patient.name ?? "User",
                             style: mainFont(
                                 fontsize: size * .04,
                                 fontweight: FontWeight.w600,
@@ -73,22 +73,39 @@ class _PatientCardsState extends State<PatientCards> {
                       SizedBox(
                         height: size * .02,
                       ),
-                      Row(children: [
-                        Icon(Icons.calendar_month,size: size*.05,color: AppColors.errorColor,),
-                        Text(patient.dateNdTime ?? "10/10/2029",style: normalFont(
-                            fontsize: size * .03,
-                            fontweight: FontWeight.w500,
-                            color: AppColors.greyColor),),
-                            SizedBox(width: size*.03,),
-                            Icon(Icons.person_2_outlined,size: size*.05,color: AppColors.errorColor,),
-                        Text(
-                          patient.user == ""?
-                          "Annonymous":
-                          patient.user ?? "Anonym0us",style: normalFont(
-                            fontsize: size * .03,
-                            fontweight: FontWeight.w500,
-                            color: AppColors.greyColor),),
-                      ],)
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            size: size * .05,
+                            color: AppColors.errorColor,
+                          ),
+                          Text(
+                            patient.dateNdTime ?? "10/10/2029",
+                            style: normalFont(
+                                fontsize: size * .03,
+                                fontweight: FontWeight.w500,
+                                color: AppColors.greyColor),
+                          ),
+                          SizedBox(
+                            width: size * .03,
+                          ),
+                          Icon(
+                            Icons.person_2_outlined,
+                            size: size * .05,
+                            color: AppColors.errorColor,
+                          ),
+                          Text(
+                            patient.user == ""
+                                ? "Annonymous"
+                                : patient.user ?? "Anonym0us",
+                            style: normalFont(
+                                fontsize: size * .03,
+                                fontweight: FontWeight.w500,
+                                color: AppColors.greyColor),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -98,19 +115,26 @@ class _PatientCardsState extends State<PatientCards> {
                   endIndent: 0,
                   indent: 0,
                 ),
-               Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
-                 child: Row(
-                   children: [
-                     Text("Show Booking Details",style:normalFont(
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Show Booking Details",
+                        style: normalFont(
                             fontsize: size * .04,
                             fontweight: FontWeight.w300,
-                            color: AppColors.blackColor),),
-                     Spacer(),
-                     Icon(Icons.arrow_right_sharp,color: AppColors.blackColor,)
-                   ],
-                 ),
-               )
+                            color: AppColors.blackColor),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_right_sharp,
+                        color: AppColors.blackColor,
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

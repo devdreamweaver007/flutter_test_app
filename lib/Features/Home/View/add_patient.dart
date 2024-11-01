@@ -3,6 +3,7 @@ import 'package:flutter/services.dart'; // For input formatters
 import 'package:flutter_test_app/Commons/app_colors.dart';
 import 'package:flutter_test_app/Commons/app_strings.dart';
 import 'package:flutter_test_app/Commons/common_appbar.dart';
+import 'package:flutter_test_app/Commons/common_flushbar.dart';
 import 'package:flutter_test_app/Commons/custom_button.dart';
 import 'package:flutter_test_app/Commons/custom_input_decoration.dart';
 import 'package:flutter_test_app/Commons/google_fonts.dart';
@@ -204,60 +205,84 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   icon: Icons.calendar_month,
                   ontap: () => _pickDateTime(context),
                 ),
-                customTextField(
-                  isreadOnly: true,
-                  ontap: () {
+                TextFormField(
+                  readOnly: true,
+                  onTap: () {
                     showCustomBottomSheet(context, size);
                   },
-                  controller: addViewmodel.maleFemaleController,
-                  name: "Male/Female",
-                  size: size,
-                  icon: Icons.group,
-                  inputType: TextInputType.number,
+                  decoration: customInputDecoration(
+                      size: size,
+                      hinttext: "Select Treatment",
+                      icon: Icons.horizontal_split,
+                      onTap: () {}),
                 ),
-                customTextField(
-                    isreadOnly: true,
-                    ontap: () {
-                      showPopupDialog(
-                          context,
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: addViewmodel.treatments.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      addViewmodel.treatmentIdController.text =
-                                          "${addViewmodel.treatments[index].id}";
-                                      addViewmodel.treatmentsController.text =
-                                          addViewmodel.treatments[index].name ??
-                                              "";
-                                      Navigator.pop(context);
-                                    },
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          addViewmodel.treatments[index].name ??
-                                              "",
-                                          style: normalFont1(
-                                              fontsize: size * .04,
-                                              fontweight: FontWeight.w500,
-                                              color: AppColors.greyColor),
-                                        ),
-                                      ),
-                                    )),
-                              );
-                            },
-                          ),
-                          "Treatments");
-                    },
-                    controller: addViewmodel.treatmentsController,
-                    name: "Treatments",
-                    size: size,
-                    icon: Icons.medical_services),
+                addViewmodel.createdList.isNotEmpty
+                    ? ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: addViewmodel.createdList.length,
+                        itemBuilder: (context, index) {
+                          var items = addViewmodel.createdList[index];
+                          return Container(
+                            width: size,
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                                color: AppColors.whiteColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: .4,
+                                      blurRadius: 2)
+                                ],
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          addViewmodel.createdList
+                                              .removeAt(index);
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.close,
+                                        color: AppColors.errorColor,
+                                      )),
+                                ),
+                                Text(
+                                  items.name,
+                                  style: normalFont(
+                                      fontsize: size * .03,
+                                      fontweight: FontWeight.w400,
+                                      color: AppColors.blackColor),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Mens :(${items.man})",
+                                      style: normalFont1(
+                                          fontsize: size * .03,
+                                          fontweight: FontWeight.w400,
+                                          color: AppColors.blackColor),
+                                    ),
+                                    Text(
+                                      " Women :(${items.women})",
+                                      style: normalFont(
+                                          fontsize: size * .03,
+                                          fontweight: FontWeight.w400,
+                                          color: AppColors.blackColor),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        })
+                    : SizedBox(),
                 customTextField(
                     isreadOnly: true,
                     ontap: () {
@@ -307,7 +332,9 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   text: "ADD",
                   color: AppColors.greenColor,
                   ontap: () {
-                    if (_formKey.currentState!.validate()) {
+                    addViewmodel.addAllCounts();
+                    if (_formKey.currentState!.validate() && addViewmodel.createdList.isNotEmpty) {
+                      addViewmodel.addAllCounts();
                       addViewmodel.addPatient(
                           context: context,
                           patient: AddPatient(
@@ -326,11 +353,13 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                                   addViewmodel.balanceAmountController.text,
                               dateAndTime: addViewmodel.dateController.text,
                               id: "",
-                              male: "${addViewmodel.man}",
-                              female: "${addViewmodel.women}",
+                              male: addViewmodel.allmenCount,
+                              female: addViewmodel.allWomenCounts,
                               branch: addViewmodel.branchControllerid.text,
                               treatments:
-                                  addViewmodel.treatmentIdController.text));
+                                  addViewmodel.alltreatementids));
+                    }else if(addViewmodel.createdList.isEmpty){
+                      errorFlushbar(context, "Select treatment");
                     }
                   },
                 ),

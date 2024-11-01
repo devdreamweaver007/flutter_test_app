@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/Features/Home/Model/add_patient_model.dart';
+import 'package:flutter_test_app/Features/Home/Model/add_treatment.dart';
 import 'package:flutter_test_app/Features/Home/Model/branch_response_model.dart';
 import 'package:flutter_test_app/Features/Home/Model/patient_model.dart';
 import 'package:flutter_test_app/Features/Home/Model/treatement_response_model.dart';
 import 'package:flutter_test_app/Features/Home/Repository/home_repository.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  List<MyModel> createdList = [];
   final TextEditingController nameController = TextEditingController();
   final TextEditingController executiveController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -23,8 +25,45 @@ class HomeViewModel extends ChangeNotifier {
   final TextEditingController maleFemaleController = TextEditingController();
   final TextEditingController treatmentIdController = TextEditingController();
   final TextEditingController branchControllerid = TextEditingController();
+  String alltreatementids = "";
+  String allmenCount = "";
+  String allWomenCounts = "";
+  String? selectedtreatemnts = "";
   int man = 0;
   int women = 0;
+
+  addToList() {
+    createdList.add(MyModel(
+        id: treatmentIdController.text,
+        name: treatmentsController.text,
+        man: "${man}",
+        women: "${women}"));
+    notifyListeners();
+  }
+
+  String getAllTreatments() {
+    return createdList.map((item) => item.name).join(',');
+  }
+
+  String getAllTreatmentIds() {
+    return createdList.map((item) => item.id).join(',');
+  }
+
+  String getAllMenCounts() {
+    return createdList.map((item) => item.man.toString()).join(',');
+  }
+
+  String getAllWomenCounts() {
+    return createdList.map((item) => item.women.toString()).join(',');
+  }
+
+  void addAllCounts() {
+    selectedtreatemnts = getAllTreatments();
+    alltreatementids = getAllTreatmentIds();
+    allmenCount = getAllMenCounts();
+    allWomenCounts = getAllWomenCounts();
+  }
+
   List<Patient> patients = [];
   HomeRepository _homerepo = HomeRepository();
   bool isloading = true;
@@ -78,7 +117,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-   clearAllcontroller() {
+  clearAllcontroller() {
     nameController.clear();
     executiveController.clear();
     phoneController.clear();

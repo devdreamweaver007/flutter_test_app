@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/Commons/app_colors.dart';
 import 'package:flutter_test_app/Commons/custom_button.dart';
+import 'package:flutter_test_app/Commons/custom_input_decoration.dart';
+import 'package:flutter_test_app/Commons/google_fonts.dart';
+import 'package:flutter_test_app/Features/Home/View/Widgets/pop_up_menu.dart';
 import 'package:flutter_test_app/Features/Home/ViewModel/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -79,6 +82,52 @@ class _PatientCounterState extends State<PatientCounter> {
     homeViewModel = Provider.of<HomeViewModel>(context);
     return Column(
       children: [
+        TextFormField(
+          controller: homeViewModel.treatmentsController,
+          onTap: () {
+            showPopupDialog(
+                context,
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: homeViewModel.treatments.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: GestureDetector(
+                          onTap: () {
+                            homeViewModel.treatmentIdController.text =
+                                "${homeViewModel.treatments[index].id}";
+                            homeViewModel.treatmentsController.text =
+                                homeViewModel.treatments[index].name ?? "";
+                            Navigator.pop(context);
+                          },
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                homeViewModel.treatments[index].name ?? "",
+                                style: normalFont1(
+                                    fontsize: size * .04,
+                                    fontweight: FontWeight.w500,
+                                    color: AppColors.greyColor),
+                              ),
+                            ),
+                          )),
+                    );
+                  },
+                ),
+                "Treatments");
+          },
+          readOnly: true,
+          decoration: customInputDecoration(
+              size: size,
+              hinttext: "Select Treatment",
+              icon: Icons.local_hospital,
+              onTap: () {}),
+        ),
+        SizedBox(
+          height: size * .03,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -152,8 +201,7 @@ class _PatientCounterState extends State<PatientCounter> {
             text: "Save",
             color: AppColors.greenColor,
             ontap: () {
-              homeViewModel.maleFemaleController.text =
-                  'Male(${homeViewModel.man})women(${homeViewModel.women})';
+              homeViewModel.addToList();
               Navigator.pop(context);
             }),
         SizedBox(height: size * .2),

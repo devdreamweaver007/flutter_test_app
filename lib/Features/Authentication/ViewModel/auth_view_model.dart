@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test_app/Commons/app_strings.dart';
 import 'package:flutter_test_app/Commons/common_flushbar.dart';
+import 'package:flutter_test_app/Extentions/enum_routes.dart';
 import 'package:flutter_test_app/Features/Authentication/Repository/login_repository.dart';
 import 'package:flutter_test_app/Features/LocalStorage/storage.dart';
 
@@ -23,11 +24,14 @@ class AuthViewModel extends ChangeNotifier {
     await _authRepository
         .login(username: username, password: password, context: context)
         .then((value) {
-          if(value?.token!=null){
-           LocalStorage.storeToken(value?.token ?? "");
-          }
+      if (value?.token != null) {
+        LocalStorage.storeToken(value?.token ?? "");
+      }
       if (value?.status == false) {
         errorFlushbar(context, AppStrings.loginError);
+      } else if (value?.status == true) {
+        successFlushbar(context, AppStrings.loginSuccess);
+        goHome(context);
       }
     });
     notifyListeners();
