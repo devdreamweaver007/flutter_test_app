@@ -17,17 +17,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: commonAppbar(text: "Profile", size: size),
+      backgroundColor: AppColors.whiteColor,
+      appBar: commonAppbar(text: "Profile", size: size, isNormal: true),
       body: Center(
         child: GestureDetector(
-          onTap: (){
+          onTap: () {
             LocalStorage.logout(context);
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("shutdown.png".imagePath,height: size*.3,width: size*.3,),
-              Text("LOGOUT",style: mainFont(fontsize: size*.05, fontweight: FontWeight.bold, color: AppColors.errorColor),)
+              Image.asset(
+                "shutdown.png".imagePath,
+                height: size * .3,
+                width: size * .3,
+              ),
+              Text(
+                "LOGOUT",
+                style: mainFont(
+                    fontsize: size * .05,
+                    fontweight: FontWeight.bold,
+                    color: AppColors.errorColor),
+              )
             ],
           ),
         ),

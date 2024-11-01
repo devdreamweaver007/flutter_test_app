@@ -7,4 +7,7 @@ class AppStrings {
   static String loginSuccess = "Login Success";
   static String loginError = "Email or Password is wrong";
   static String serverError = "Server Error Check Your Internet";
+  static String success = "Patient Add Success"; 
+  static String failed = "Patient Add Failed";
+  static String failedFetching = "Fetching Failed";
 }

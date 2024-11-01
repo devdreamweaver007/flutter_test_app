@@ -22,6 +22,6 @@ errorFlushbar(context,String message){
   return showFlushbar(context: context, color: AppColors.errorColor, icon: Icons.sentiment_dissatisfied, message: message);
 }
 successFlushbar(context,String message){
-  return showFlushbar(context: context, color: AppColors.successColor, icon: Icons.sentiment_neutral, message: message);
+  return showFlushbar(context: context, color: AppColors.successColor, icon: Icons.sentiment_satisfied, message: message);
 }
 

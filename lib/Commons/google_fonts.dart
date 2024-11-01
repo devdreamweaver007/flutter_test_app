@@ -17,4 +17,11 @@ TextStyle normalFont(
   return GoogleFonts.figtree(
       fontSize: fontsize, fontWeight: FontWeight.bold, color: color,);
 }
+TextStyle normalFont1(
+    {required double fontsize,
+    required FontWeight fontweight,
+    required Color color}) {
+  return GoogleFonts.figtree(
+      fontSize: fontsize, fontWeight: FontWeight.bold, color: color,fontStyle: FontStyle.italic );
+}
 
